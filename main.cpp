@@ -8,7 +8,18 @@
 
 int main()
 {
-	char screen[SCREEN_ROWS_NUM][SCREEN_COLS_NUM + 1]; //we'll paint everything in this matrix, then flush it onto the creen
+    SetConsoleTitle(L"Simple Console Game");
+
+    //Set Physical Console Window Size
+    HANDLE hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SMALL_RECT rectWindow = {0, 0, SCREEN_COLS_NUM - 1, SCREEN_ROWS_NUM - 1};
+    SetConsoleWindowInfo(hConsole, TRUE, &rectWindow);
+    //Set the size of the screen buffer
+    COORD coord = {SCREEN_COLS_NUM, SCREEN_ROWS_NUM};
+    SetConsoleScreenBufferSize(hConsole, coord);
+
+    char screen[SCREEN_ROWS_NUM][SCREEN_COLS_NUM + 1]; //we'll paint everything in this matrix, then flush it onto the creen
 
 	int snakePos_Row = 10;
 	int snakePos_Col = 10;
