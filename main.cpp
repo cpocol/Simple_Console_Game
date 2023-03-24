@@ -3,8 +3,7 @@
 #include <stdio.h>
 #include <windows.h>
 
-#define SCREEN_ROWS_NUM 25
-#define SCREEN_COLS_NUM 80
+const int screenW = 80, screenH = 25;
 
 int main()
 {
@@ -13,13 +12,13 @@ int main()
     //Set Physical Console Window Size
     HANDLE hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SMALL_RECT rectWindow = {0, 0, SCREEN_COLS_NUM - 1, SCREEN_ROWS_NUM - 1};
+    SMALL_RECT rectWindow = {0, 0, screenW - 1, screenH - 1};
     SetConsoleWindowInfo(hConsole, TRUE, &rectWindow);
     //Set the size of the screen buffer
-    COORD coord = {SCREEN_COLS_NUM, SCREEN_ROWS_NUM};
+    COORD coord = {screenW, screenH};
     SetConsoleScreenBufferSize(hConsole, coord);
 
-    char screen[SCREEN_ROWS_NUM][SCREEN_COLS_NUM + 1]; //we'll paint everything in this matrix, then flush it onto the creen
+    char screen[screenH][screenW + 1]; //we'll paint everything in this matrix, then flush it onto the creen
 
 	int snakePos_Row = 10;
 	int snakePos_Col = 10;
@@ -79,9 +78,9 @@ int main()
 			snakeMove_DRow = +1;
 		}
 		else
-		if (snakePos_Row == SCREEN_ROWS_NUM)
+		if (snakePos_Row == screenH)
 		{
-			snakePos_Row = SCREEN_ROWS_NUM - 2;
+			snakePos_Row = screenH - 2;
 			snakeMove_DRow = -1;
 		}
 		else
@@ -91,9 +90,9 @@ int main()
 			snakeMove_DCol = +1;
 		}
 		else
-		if (snakePos_Col == SCREEN_COLS_NUM)
+		if (snakePos_Col == screenW)
 		{
-			snakePos_Col = SCREEN_COLS_NUM - 2;
+			snakePos_Col = screenW - 2;
 			snakeMove_DCol = -1;
 		}
 
@@ -102,16 +101,16 @@ int main()
 		//paint the snake
 		screen[snakePos_Row][snakePos_Col] = '*';
 		//set the string terminator for each row as it will be flushed onto the real screen: each screen row comming from a null terminated string
-		for (int row = 0; row < SCREEN_ROWS_NUM; row++)
-			screen[row][SCREEN_COLS_NUM] = 0;
+		for (int row = 0; row < screenH; row++)
+			screen[row][screenW] = 0;
 
 		system("cls"); //clear the (real) screen
 
 		//flush the screen matrix onto the real screen
-		for (int row = 0; row < SCREEN_ROWS_NUM; row++)
+		for (int row = 0; row < screenH; row++)
 		{
-			if (row == SCREEN_ROWS_NUM - 1)
-				screen[row][SCREEN_COLS_NUM - 1] = 0; //avoid scrolling one row up when the screen is full
+			if (row == screenH - 1)
+				screen[row][screenW - 1] = 0; //avoid scrolling one row up when the screen is full
 			printf("%s", screen[row]);
 		}
 
