@@ -1,1 +1,14 @@
+*.obj
+*.gch
+*.pch
 *.exe
+*.out
+*.depend
+*.vcxproj.user
+*.layout
+bin
+obj
+x64
+release
+debug
+.vs
