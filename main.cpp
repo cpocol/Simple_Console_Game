@@ -8,7 +8,7 @@
 
 int main()
 {
-    SetConsoleTitle(L"Simple Console Game");
+    SetConsoleTitleA("Simple Console Game");
 
     //Set Physical Console Window Size
     HANDLE hConsole;
